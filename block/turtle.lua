@@ -25,11 +25,35 @@ minetest.register_node("computertest:turtle", {
         minetest.remove_node(pos)
     end,
 })
-minetest.register_craft({
-    output = 'computertest:turtle',
-    recipe = {
-        {'default:steel_ingot', 'default:steel_ingot', 'default:steel_ingot'},
-        {'default:steel_ingot', 'default:chest',       'default:steel_ingot'},
-        {'default:steel_ingot', 'default:mese',        'default:steel_ingot'},
-    }
-})
+
+
+
+
+if minetest.get_modpath("mcl_core") then
+    game = "mcl"
+elseif minetest.get_modpath("default") then
+    game = "default"
+    -- Note: Intentionally not raising an error when no compatible game found
+    --       as only the crafting r#cipe is affected.
+end
+
+
+if game == "default" then
+    minetest.register_craft({
+        output = 'computertest:turtle',
+        recipe = {
+            {'default:steel_ingot', 'default:steel_ingot', 'default:steel_ingot'},
+            {'default:steel_ingot', 'default:chest',       'default:steel_ingot'},
+            {'default:steel_ingot', 'default:mese',        'default:steel_ingot'},
+        }
+    })
+elseif game == "mcl" then
+    minetest.register_craft({
+        output = 'computertest:turtle',
+        recipe = {
+            {'mcl_core:iron_ingot', 'mcl_core:iron_ingot', 'mcl_core:iron_ingot'},
+            {'mcl_core:iron_ingot', 'mcl_core:chest',      'mcl_core:iron_ingot'},
+            {'mcl_core:iron_ingot', 'mcl_core:redstone',   'mcl_core:iron_ingot'},
+        }
+    })
+end
